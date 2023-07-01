@@ -49,7 +49,6 @@ public class DB {
 		}
 	}
 	
-	
 	public static void fecharStatement(Statement st) {
 		if (st != null) {
 			try {
@@ -69,12 +68,4 @@ public class DB {
 			}
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 }

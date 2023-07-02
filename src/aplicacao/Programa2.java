@@ -26,12 +26,18 @@ public class Programa2 {
 			System.out.println(depart);
 		}
 		
-		System.out.println();
-		System.out.println("<<<<<< TESTE NUMERO 4: Departamento inserir() >>>>>>");
-		Departamento novoDepart = new Departamento(null, "Perfumaria");
-		departamentoDao.inserir(novoDepart);
-		System.out.println("novo id: " + novoDepart.getId());
+//		System.out.println();
+//		System.out.println("<<<<<< TESTE NUMERO 4: Departamento inserir() >>>>>>");
+//		Departamento novoDepart = new Departamento(null, "Perfumaria");
+//		departamentoDao.inserir(novoDepart);
+//		System.out.println("novo id: " + novoDepart.getId());
 
+		System.out.println();
+		System.out.println("<<<<<< TESTE NUMERO 5: Departamento atualizar() >>>>>>");
+		Departamento departemento_2 = departamentoDao.encontrarPorId(1);
+		departemento_2.setName("Musica");
+		departamentoDao.atualizar(departemento_2);
+		System.out.println("Update completed");
 		
 		
 		

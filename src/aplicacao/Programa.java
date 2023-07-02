@@ -1,6 +1,8 @@
 package aplicacao;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import model.dao.FabricaDAO;
 import model.dao.VendedorDAO;
@@ -18,6 +20,13 @@ public class Programa {
 		System.out.println("<<<<<< TESTE NUMERO 1: Vendedor encontrarPorId() >>>>>>");
 		Vendedor vendedor = vendedorDAO.encontrarPorId(5);
 		System.out.println(vendedor);
+		System.out.println();
+		System.out.println("<<<<<< TESTE NUMERO 2: Vendedor encontrarPorDepartamento() >>>>>>");
+		Departamento depart = new Departamento(2,null);
+		List<Vendedor> listaVendedores = vendedorDAO.encontrarPorDepartamento(depart);
+		for (Vendedor obj : listaVendedores) {
+			System.out.println(obj);
+		}
 
 //		System.out.println(depart);
 //		System.out.println();

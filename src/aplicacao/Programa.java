@@ -18,21 +18,27 @@ public class Programa {
 
 		VendedorDAO vendedorDAO = FabricaDAO.createVendedorDAO();
 		System.out.println("<<<<<< TESTE NUMERO 1: Vendedor encontrarPorId() >>>>>>");
-		Vendedor vendedor = vendedorDAO.encontrarPorId(5);
+		Vendedor vendedor = vendedorDAO.encontrarPorId(3);
 		System.out.println(vendedor);
+
 		System.out.println();
 		System.out.println("<<<<<< TESTE NUMERO 2: Vendedor encontrarPorDepartamento() >>>>>>");
-		Departamento depart = new Departamento(2,null);
+		Departamento depart = new Departamento(2, null);
 		List<Vendedor> listaVendedores = vendedorDAO.encontrarPorDepartamento(depart);
 		for (Vendedor obj : listaVendedores) {
 			System.out.println(obj);
 		}
 
+		System.out.println();
+		System.out.println("<<<<<< TESTE NUMERO 3: Vendedor encontrarTodos() >>>>>>");
+
+		listaVendedores  = vendedorDAO.encontrarTodos();
+		for (Vendedor obj : listaVendedores) {
+			System.out.println(obj);
+		}
 //		System.out.println(depart);
 //		System.out.println();
 //		System.out.println(vendedorr);
-		
-		
 
 	}
 

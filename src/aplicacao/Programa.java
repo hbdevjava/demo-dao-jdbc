@@ -55,7 +55,6 @@ public class Programa {
 		
 		System.out.println();
 		Scanner sc = new Scanner(System.in);
-		
 		System.out.println("<<<<<< TESTE NUMERO 6: Vendedor deletarPorId() >>>>>>");
 		System.out.print("Digite o Id do Vendedor que sera deslidado: ");
 		int id = sc.nextInt();

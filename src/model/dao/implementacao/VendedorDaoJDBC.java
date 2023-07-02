@@ -108,8 +108,6 @@ public class VendedorDaoJDBC implements VendedorDAO {
 	public void deletarPorId(Integer id) {
 		PreparedStatement st = null;
 		try {
-			conn = DB.abrirConexao();
-	
 			st = conn.prepareStatement(
 					"DELETE FROM seller "
 					+ "WHERE "

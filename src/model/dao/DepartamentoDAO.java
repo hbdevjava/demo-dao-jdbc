@@ -10,6 +10,6 @@ public interface DepartamentoDAO {
 	void inserir(Departamento departamento);
 	void atualizar(Departamento departamento);
 	void deletarPorId(Integer id);
-	void encontrarPorId(Integer id);
+	Departamento encontrarPorId(Integer id);
 	List<Departamento> encontrarTodos();
 }

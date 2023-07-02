@@ -31,22 +31,26 @@ public class Programa {
 
 		System.out.println();
 		System.out.println("<<<<<< TESTE NUMERO 3: Vendedor encontrarTodos() >>>>>>");
-
 		listaVendedores  = vendedorDAO.encontrarTodos();
 		for (Vendedor obj : listaVendedores) {
 			System.out.println(obj);
 		}
 		
-		System.out.println();
-		System.out.println("<<<<<< TESTE NUMERO 4: Vendedor Inserir() >>>>>>");
-		Vendedor vendedorr = new Vendedor(null, "Vikas", "vk@outlook.com", new Date(), 3000.89, depart);
-		vendedorDAO.inserir(vendedorr);
-		System.out.println("Inserido novo Id: " + vendedorr.getId());
-		System.out.println("Inserido novo Nome: " + vendedorr.getNome());
-		
-//		System.out.println(depart);
 //		System.out.println();
-//		System.out.println(vendedorr);
+//		System.out.println("<<<<<< TESTE NUMERO 4: Vendedor inserir() >>>>>>");
+//		Vendedor vendedorr = new Vendedor(null, "Vikas", "vk@outlook.com", new Date(), 3000.89, depart);
+//		vendedorDAO.inserir(vendedorr);
+//		System.out.println("Inserido novo Id: " + vendedorr.getId());
+//		System.out.println("Inserido novo Nome: " + vendedorr.getNome());
+		
+		System.out.println();
+		System.out.println("<<<<<< TESTE NUMERO 5: Vendedor atualizar() >>>>>>");
+		vendedor = vendedorDAO.encontrarPorId(14);
+		vendedor.setNome("Vikas Brito");
+		vendedor.setEmail("vk@outlook.com");
+		vendedorDAO.atualizar(vendedor);
+		System.out.println(vendedor.getNome());
+		System.out.println(vendedor.getEmail());
 
 	}
 

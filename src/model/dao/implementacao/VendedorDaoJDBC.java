@@ -30,9 +30,7 @@ public class VendedorDaoJDBC implements VendedorDAO {
 	public void inserir(Vendedor vendedor) {
 		PreparedStatement st = null;
 		try {
-			conn = DB.abrirConexao();
-
-			// EXAMPLE 1:
+			
 			st = conn.prepareStatement(
 					"INSERT INTO seller "
 					+ "(Name, Email, BirthDate, BaseSalary, DepartmentId) "
@@ -72,9 +70,38 @@ public class VendedorDaoJDBC implements VendedorDAO {
 	}
 
 	@Override
-	public void atualizar(Vendedor Vendedor) {
+	public void atualizar(Vendedor vendedor) {
+		PreparedStatement st = null;
+		try {
+			
+			st = conn.prepareStatement(
+					"UPDATE seller  "
+					+ "SET Name= ?, Email= ?,  BirthDate= ?, BaseSalary= ?, DepartmentId= ?  "
+					+ "WHERE Id = ? "
+					);
+					
 
+			st.setString(1, vendedor.getNome() );
+			st.setString(2, vendedor.getEmail());
+			st.setDate(3, new java.sql.Date(vendedor.getDataNascimento().getTime()));
+			st.setDouble(4, vendedor.getBasaSalarial());
+			st.setInt(5, vendedor.getDepartmento().getId());
+			st.setInt(6, vendedor.getId());
+			
+			st.executeUpdate();
+			
+			
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} 
+		
+		finally {
+			DB.fecharStatement(st);
+			
+		}
 	}
+
 
 	@Override
 	public void deletarPorId(Integer id) {

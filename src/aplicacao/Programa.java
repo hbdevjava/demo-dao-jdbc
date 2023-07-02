@@ -3,6 +3,7 @@ package aplicacao;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 import model.dao.FabricaDAO;
 import model.dao.VendedorDAO;
@@ -45,12 +46,25 @@ public class Programa {
 		
 		System.out.println();
 		System.out.println("<<<<<< TESTE NUMERO 5: Vendedor atualizar() >>>>>>");
-		vendedor = vendedorDAO.encontrarPorId(14);
+		vendedor = vendedorDAO.encontrarPorId(15);
 		vendedor.setNome("Vikas Brito");
 		vendedor.setEmail("vk@outlook.com");
 		vendedorDAO.atualizar(vendedor);
 		System.out.println(vendedor.getNome());
 		System.out.println(vendedor.getEmail());
+		
+		System.out.println();
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("<<<<<< TESTE NUMERO 6: Vendedor deletarPorId() >>>>>>");
+		System.out.print("Digite o Id do Vendedor que sera deslidado: ");
+		int id = sc.nextInt();
+		vendedorDAO.deletarPorId(id);
+		
+		
+		sc.close();
+		
+		
 
 	}
 

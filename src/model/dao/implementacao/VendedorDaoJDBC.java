@@ -14,6 +14,7 @@ import java.util.Map;
 
 import db.DB;
 import db.DbException;
+import db.DbIntegrityException;
 import model.dao.VendedorDAO;
 import model.entities.Departamento;
 import model.entities.Vendedor;
@@ -105,7 +106,34 @@ public class VendedorDaoJDBC implements VendedorDAO {
 
 	@Override
 	public void deletarPorId(Integer id) {
+		PreparedStatement st = null;
+		try {
+			conn = DB.abrirConexao();
+	
+			st = conn.prepareStatement(
+					"DELETE FROM seller "
+					+ "WHERE "
+					+ "Id = ?");
 
+			st.setInt(1, id);
+			
+			int linhasAfetadas = st.executeUpdate();
+			
+			if(linhasAfetadas == 0) {
+				System.out.println("Id nao existe");
+			}else {
+				System.out.println("Deletado com Sucesso");
+			}
+			
+			
+		}
+		catch (SQLException e) {
+			throw new DbIntegrityException(e.getMessage());
+		} 
+		finally {
+			DB.fecharStatement(st);
+			DB.fecharConexao();;
+		}
 	}
 
 	@Override

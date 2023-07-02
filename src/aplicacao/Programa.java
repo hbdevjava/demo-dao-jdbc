@@ -37,12 +37,12 @@ public class Programa {
 			System.out.println(obj);
 		}
 		
-//		System.out.println();
-//		System.out.println("<<<<<< TESTE NUMERO 4: Vendedor inserir() >>>>>>");
-//		Vendedor vendedorr = new Vendedor(null, "Vikas", "vk@outlook.com", new Date(), 3000.89, depart);
-//		vendedorDAO.inserir(vendedorr);
-//		System.out.println("Inserido novo Id: " + vendedorr.getId());
-//		System.out.println("Inserido novo Nome: " + vendedorr.getNome());
+		System.out.println();
+		System.out.println("<<<<<< TESTE NUMERO 4: Vendedor inserir() >>>>>>");
+		Vendedor vendedorr = new Vendedor(null, "Vikas", "vk@outlook.com", new Date(), 3000.89, depart);
+		vendedorDAO.inserir(vendedorr);
+		System.out.println("Inserido novo Id: " + vendedorr.getId());
+		System.out.println("Inserido novo Nome: " + vendedorr.getNome());
 		
 		System.out.println();
 		System.out.println("<<<<<< TESTE NUMERO 5: Vendedor atualizar() >>>>>>");

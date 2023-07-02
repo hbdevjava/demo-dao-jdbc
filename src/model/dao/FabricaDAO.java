@@ -1,6 +1,7 @@
 package model.dao;
 
 import db.DB;
+import model.dao.implementacao.DepartamentoDaoJDBC;
 import model.dao.implementacao.VendedorDaoJDBC;
 
 public class FabricaDAO {
@@ -13,6 +14,8 @@ public class FabricaDAO {
 	//ISSO FAZ COM QUE VC NAO PRECISE EXPOR A IMPLEMENTAÇAO DA CLASSE VendedorDaoJDBC(null) MOSTRA SOMENTE A INTERFACE
 	//VendedorDAO EX: VendedorDAO vendedorDAO = FabricaDAO.createVendedorDAO();
 	
-	
+	public static DepartamentoDAO createDepartamentoDAO() {
+		return new DepartamentoDaoJDBC(DB.abrirConexao());
+	}
 	
 }

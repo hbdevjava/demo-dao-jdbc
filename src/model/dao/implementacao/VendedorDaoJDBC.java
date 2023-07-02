@@ -16,7 +16,6 @@ import model.entities.Vendedor;
 public class VendedorDaoJDBC implements VendedorDAO {
 
 	private Connection conn;// dependencia
-	
 
 	public VendedorDaoJDBC(Connection conn) {
 		this.conn = conn;
@@ -49,16 +48,8 @@ public class VendedorDaoJDBC implements VendedorDAO {
 			st.setInt(1, id);
 			rs = st.executeQuery();
 			if (rs.next()) {
-				Departamento dep = new Departamento();
-				dep.setId(rs.getInt("DepartmentId"));
-				dep.setName(rs.getString("DepName"));
-				Vendedor obj = new Vendedor();
-				obj.setId(rs.getInt("Id"));
-				obj.setNome(rs.getString("Name"));
-				obj.setEmail(rs.getString("Email"));
-				obj.setBasaSalarial((rs.getDouble("BaseSalary")));
-				obj.setDataNascimento((rs.getDate("BirthDate")));
-				obj.setDepartmento(dep);
+				Departamento dep = intanciarDepartamento(rs);
+				Vendedor obj = intanciarVendedor(rs, dep);
 				return obj;
 			}
 			return null;
@@ -70,10 +61,27 @@ public class VendedorDaoJDBC implements VendedorDAO {
 		}
 	}
 
+	private Departamento intanciarDepartamento(ResultSet rs) throws SQLException {
+		Departamento dep = new Departamento();// -> ESSE COD INSTANCIA UM DEPARTAMENTO
+		dep.setId(rs.getInt("DepartmentId"));
+		dep.setName(rs.getString("DepName"));
+		return dep;
+	}
+
+	private Vendedor intanciarVendedor(ResultSet rs, Departamento dep) throws SQLException {
+		Vendedor obj = new Vendedor();// -> ESSE COD INSTANCIA UM VENDEDOR;
+		obj.setId(rs.getInt("Id"));
+		obj.setNome(rs.getString("Name"));
+		obj.setEmail(rs.getString("Email"));
+		obj.setBasaSalarial((rs.getDouble("BaseSalary")));
+		obj.setDataNascimento((rs.getDate("BirthDate")));
+		obj.setDepartmento(dep);
+		return obj;
+	}
+
 	@Override
 	public List<Vendedor> encontrarTodos() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 }
-  

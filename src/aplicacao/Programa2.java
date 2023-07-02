@@ -1,6 +1,7 @@
 package aplicacao;
 
 import java.util.List;
+import java.util.Scanner;
 
 import model.dao.DepartamentoDAO;
 import model.dao.FabricaDAO;
@@ -28,7 +29,7 @@ public class Programa2 {
 		
 //		System.out.println();
 //		System.out.println("<<<<<< TESTE NUMERO 4: Departamento inserir() >>>>>>");
-//		Departamento novoDepart = new Departamento(null, "Perfumaria");
+//		Departamento novoDepart = new Departamento(null, "Vestuario");
 //		departamentoDao.inserir(novoDepart);
 //		System.out.println("novo id: " + novoDepart.getId());
 
@@ -37,8 +38,17 @@ public class Programa2 {
 		Departamento departemento_2 = departamentoDao.encontrarPorId(1);
 		departemento_2.setName("Musica");
 		departamentoDao.atualizar(departemento_2);
-		System.out.println("Update completed");
+		System.out.println("Atualizado");
 		
+		System.out.println();
+		Scanner sc = new Scanner(System.in);
+		System.out.println("<<<<<< TESTE NUMERO 6: Departamento deletarPorId() >>>>>>");
+		System.out.print("Entre com o Id do Departamento que deseja excluir: ");
+		int id = sc.nextInt();
+		departamentoDao.deletarPorId(id);
+		
+
+		sc.close();
 		
 		
 	}

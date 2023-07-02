@@ -10,68 +10,81 @@ import java.util.List;
 
 import db.DB;
 import db.DbException;
+import db.DbIntegrityException;
 import model.dao.DepartamentoDAO;
 import model.entities.Departamento;
 
-public class DepartamentoDaoJDBC implements DepartamentoDAO{
+public class DepartamentoDaoJDBC implements DepartamentoDAO {
 
-	private Connection conn;// dependencia	
-	
+	private Connection conn;// dependencia
+
 	public DepartamentoDaoJDBC(Connection conn) {
-		this.conn= conn;
+		this.conn = conn;
 	}
 
 	@Override
 	public void inserir(Departamento obj) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement(
-				"INSERT INTO department " +
-				"(Name) " +
-				"VALUES " +
-				"(?)", 
-				Statement.RETURN_GENERATED_KEYS);
+			st = conn.prepareStatement("INSERT INTO department " + "(Name) " + "VALUES " + "(?)",
+					Statement.RETURN_GENERATED_KEYS);
 
 			st.setString(1, obj.getName());
 
 			int rowsAffected = st.executeUpdate();
-			
+
 			if (rowsAffected > 0) {
 				ResultSet rs = st.getGeneratedKeys();
 				if (rs.next()) {
 					int id = rs.getInt(1);
 					obj.setId(id);
 				}
-			}
-			else {
+			} else {
 				throw new DbException("Unexpected error! No rows affected!");
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
-		} 
-		finally {
+		} finally {
 			DB.fecharStatement(st);
 		}
-		
+
 	}
 
 	@Override
 	public void atualizar(Departamento obj) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement(
-				"UPDATE department " +
-				"SET Name = ? " +
-				"WHERE Id = ?");
+			st = conn.prepareStatement("UPDATE department " + "SET Name = ? " + "WHERE Id = ?");
 
 			st.setString(1, obj.getName());
 			st.setInt(2, obj.getId());
 
 			st.executeUpdate();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
+		} finally {
+			DB.fecharStatement(st);
+		}
+	}
+
+	@Override
+	public void deletarPorId(Integer id) {
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("DELETE FROM department WHERE Id = ?");
+
+			st.setInt(1, id);
+			int linhasAfetadas = st.executeUpdate();
+
+			if (linhasAfetadas == 0) {
+				System.out.println("Id nao existe");
+			} else {
+				System.out.println("Deletado com Sucesso");
+			}
+			
+		} 
+		catch (SQLException e) {
+			throw new DbIntegrityException(e.getMessage());
 		} 
 		finally {
 			DB.fecharStatement(st);
@@ -79,35 +92,27 @@ public class DepartamentoDaoJDBC implements DepartamentoDAO{
 	}
 
 	@Override
-	public void deletarPorId(Integer id) {
-		
-	}
-
-	@Override
 	public Departamento encontrarPorId(Integer id) {
-			PreparedStatement st = null;
-			ResultSet rs = null;
-			try {
-				st = conn.prepareStatement(
-					"SELECT * FROM department WHERE Id = ?");
-				st.setInt(1, id);
-				rs = st.executeQuery();
-				if (rs.next()) {
-					Departamento obj = new Departamento();
-					obj.setId(rs.getInt("Id"));
-					obj.setName(rs.getString("Name"));
-					return obj;
-				}
-				return null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement("SELECT * FROM department WHERE Id = ?");
+			st.setInt(1, id);
+			rs = st.executeQuery();
+			if (rs.next()) {
+				Departamento obj = new Departamento();
+				obj.setId(rs.getInt("Id"));
+				obj.setName(rs.getString("Name"));
+				return obj;
 			}
-			catch (SQLException e) {
-				throw new DbException(e.getMessage());
-			}
-			finally {
-				DB.fecharStatement(st);
-				DB.fecharResultSet(rs);
-			}
-		
+			return null;
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
+
 	}
 
 	@Override
@@ -115,8 +120,7 @@ public class DepartamentoDaoJDBC implements DepartamentoDAO{
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement(
-				"SELECT * FROM department ORDER BY Name");
+			st = conn.prepareStatement("SELECT * FROM department ORDER BY Name");
 			rs = st.executeQuery();
 
 			List<Departamento> list = new ArrayList<>();
@@ -128,15 +132,13 @@ public class DepartamentoDaoJDBC implements DepartamentoDAO{
 				list.add(obj);
 			}
 			return list;
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
-		}
-		finally {
+		} finally {
 			DB.fecharStatement(st);
 			DB.fecharResultSet(rs);
 		}
-		
+
 	}
 
 }

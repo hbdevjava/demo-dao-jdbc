@@ -4,11 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import db.DB;
 import db.DbException;
-import db.DbIntegrityException;
 import model.dao.DepartamentoDAO;
 import model.entities.Departamento;
 
@@ -20,11 +21,40 @@ public class DepartamentoDaoJDBC implements DepartamentoDAO{
 		this.conn= conn;
 	}
 
-	@Override
-	public void inserir(Departamento departamento) {
-		
-		
-	}
+//	@Override
+//	public void inserir(Departamento obj) {
+//		PreparedStatement st = null;
+//		try {
+//			st = conn.prepareStatement(
+//				"INSERT INTO department " +
+//				"(Name) " +
+//				"VALUES " +
+//				"(?)", 
+//				Statement.RETURN_GENERATED_KEYS);
+//
+//			st.setString(1, obj.getName());
+//
+//			int rowsAffected = st.executeUpdate();
+//			
+//			if (rowsAffected > 0) {
+//				ResultSet rs = st.getGeneratedKeys();
+//				if (rs.next()) {
+//					int id = rs.getInt(1);
+//					obj.setId(id);
+//				}
+//			}
+//			else {
+//				throw new DbException("Unexpected error! No rows affected!");
+//			}
+//		}
+//		catch (SQLException e) {
+//			throw new DbException(e.getMessage());
+//		} 
+//		finally {
+//			DB.fecharStatement(st);
+//		}
+//		
+//	}
 
 	@Override
 	public void atualizar(Departamento departamento) {
@@ -33,32 +63,6 @@ public class DepartamentoDaoJDBC implements DepartamentoDAO{
 
 	@Override
 	public void deletarPorId(Integer id) {
-		PreparedStatement st = null;
-		try {
-			st = conn.prepareStatement(
-					"DELETE FROM Department "
-					+ "WHERE "
-					+ "Id = ?");
-
-			st.setInt(1, id);
-			
-			int linhasAfetadas = st.executeUpdate();
-			
-			if(linhasAfetadas == 0) {
-				System.out.println("Id nao existe");
-			}else {
-				System.out.println("Deletado com Sucesso");
-			}
-			
-			
-		}
-		catch (SQLException e) {
-			throw new DbIntegrityException(e.getMessage());
-		} 
-		finally {
-			DB.fecharStatement(st);
-			DB.fecharConexao();;
-		}
 		
 	}
 
@@ -91,8 +95,31 @@ public class DepartamentoDaoJDBC implements DepartamentoDAO{
 
 	@Override
 	public List<Departamento> encontrarTodos() {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+				"SELECT * FROM department ORDER BY Name");
+			rs = st.executeQuery();
+
+			List<Departamento> list = new ArrayList<>();
+
+			while (rs.next()) {
+				Departamento obj = new Departamento();
+				obj.setId(rs.getInt("Id"));
+				obj.setName(rs.getString("Name"));
+				list.add(obj);
+			}
+			return list;
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.fecharStatement(st);
+			DB.fecharResultSet(rs);
+		}
 		
-		return null;
 	}
 
 }
